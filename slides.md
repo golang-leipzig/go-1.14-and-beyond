@@ -2,7 +2,7 @@
 title: Go 1.14 and Beyond
 subtitle: What we know already
 author: Andreas Linz—klingt.net
-date: 2019-11-14T19+01:00
+date: 2020-02-21T19+16:11
 ---
 
 # Go 1.14 {data-background-image=https://images.unsplash.com/photo-1467219598992-52591d77fdec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80 data-background-opacity=0.31415}
