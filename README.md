@@ -1,5 +1,5 @@
-# Go Module Proxy Talk @ Golang Leipzig November Meetup
+# Go 1.14 and Beyond Talk @ Golang Leipzig Februrary 2020 Meetup
 
-You can view the slides here: [rawcdn.githack.com](https://rawcdn.githack.com/golang-leipzig/module-proxy-november-meetup/c58770084e025fd4a1ea0f6b7f69c5adeae1817a/slides.html).
+You can view the slides here: [rawcdn.githack.com](https://rawcdn.githack.com/golang-leipzig/go-1.14-and-beyond/15cf74eaac4123cd9d0ad15a7ccdc1f5202ed9f8/slides.html).
 
-Background videos were taken from [giphy](https://giphy.com) and images from [unslapsh](https://unsplash.com).
+Background images were taken from [unslapsh](https://unsplash.com).
