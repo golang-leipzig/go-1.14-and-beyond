@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Andreas Linz—klingt.net">
+  <title>Go 1.14 and Beyond</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://revealjs.com/css/reset.css">
+  <link rel="stylesheet" href="https://revealjs.com/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://revealjs.com/css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://revealjs.com/css/print/pdf.css' : 'https://revealjs.com/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://revealjs.com/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Go 1.14 and Beyond</h1>
+  <p class="subtitle">What we know already</p>
+  <p class="author">Andreas Linz—klingt.net</p>
+  <p class="date">2019-11-14T19+01:00</p>
+</section>
+
+<section id="go-1.14" class="title-slide slide level1" data-background-image="https://images.unsplash.com/photo-1467219598992-52591d77fdec?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" data-background-opacity="0.31415">
+<h1 data-background-image="https://images.unsplash.com/photo-1467219598992-52591d77fdec?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" data-background-opacity="0.31415">Go 1.14</h1>
+
+</section>
+<section class="slide level3">
+
+<ul>
+<li><a href="https://tip.golang.org/doc/go1.14">preliminary release notes</a></li>
+<li>module support in the go command is now <strong>ready for production use</strong></li>
+<li>they even added <a href="https://go-review.googlesource.com/c/go/+/203497/">Subversion support</a> for modules 🤣</li>
+</ul>
+</section>
+<section id="embedding-of-overlapping-interfaces" class="slide level3">
+<h3>Embedding of overlapping interfaces</h3>
+<ul>
+<li><a href="https://play.golang.org/p/SIlnehVqmH-">will not compile today</a></li>
+<li><a href="https://github.com/golang/proposal/blob/master/design/6977-overlapping-interfaces.md">allowed with Go 1.14</a></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">docker</span> run -v <span class="va">$PWD</span>:/app -w /app --rm -it golang:1.13 go run overlapping-interfaces.go</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">.</span>/overlapping-interfaces.go:<span class="ex">10</span>:2: duplicate method Close</span>
+<span id="cb1-3"><a href="#cb1-3"></a>$ <span class="ex">docker</span> run -v <span class="va">$PWD</span>:/app -w /app --rm -it golang:1.14-rc go run overlapping-interfaces.go</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ex">works</span></span></code></pre></div>
+</section>
+<section id="goinsecure" class="slide level3">
+<h3>GOINSECURE</h3>
+<ul>
+<li>instuct <code>go</code> command to skip certificate validation or accept HTTP</li>
+<li>useful when developing a module proxy</li>
+<li><code>GOINSECURE=localhost go get foo/bar</code></li>
+</ul>
+</section>
+<section id="vendoring" class="slide level3">
+<h3>Vendoring</h3>
+<ul>
+<li>if <code>go.mod</code> specifies <code>Go 1.14</code> and a <code>/vendor</code> folder present then commands will default to using vendoring</li>
+<li>usage of modules can be enforced with <code>-mod=mod</code></li>
+</ul>
+</section>
+<section id="test-log-output" class="slide level3">
+<h3>Test log output</h3>
+<ul>
+<li>output of <code>go test -v</code> (or <code>t.Log</code>) is now streamed instead of being presented at the end of all tests</li>
+</ul>
+</section>
+
+<section id="runtime-improvements" class="title-slide slide level1">
+<h1>Runtime Improvements</h1>
+
+</section>
+<section id="almost-zero-overhead-defer" class="slide level3">
+<h3>(almost) Zero Overhead <code>defer</code></h3>
+<blockquote>
+<p>This release improves the performance of most uses of defer to incur almost zero overhead compared to calling the deferred function directly. As a result, defer can now be used in performance-critical code without overhead concerns.</p>
+</blockquote>
+</section>
+<section id="more-efficient-page-allocator" class="slide level3">
+<h3>More Efficient Page Allocator</h3>
+<blockquote>
+<p>The page allocator is more efficient and incurs significantly less lock contention at high values of GOMAXPROCS. This is most noticeable as lower latency and higher throughput for large allocations being done in parallel and at a high rate.</p>
+</blockquote>
+<p>Discord should consider to reevaluate their switch <a href="https://blog.discordapp.com/why-discord-is-switching-from-go-to-rust-a190bbca2b1f">from Go to Rust</a> 😉.</p>
+</section>
+<section id="new-package-hashmaphash" class="slide level3">
+<h3>New package <code>hash/maphash</code></h3>
+<ul>
+<li>collision-resistant</li>
+<li>not cryptographically secure</li>
+<li>hash functions map arbitrary <code>string</code>/<code>[]byte</code> to 64-bit integers</li>
+<li>useful for building custom maps</li>
+<li><em>not safe for concurrent use by multiple goroutines</em> (can be initialized with the same seed to get equal hashes)</li>
+</ul>
+</section>
+
+<section id="minor-library-changes" class="title-slide slide level1">
+<h1>Minor Library Changes</h1>
+
+</section>
+<section id="cryptotls" class="slide level3">
+<h3><code>crypto/tls</code></h3>
+<ul>
+<li>SSL3 support removed</li>
+<li>TLS1.3 can not be disabled using <code>GODEBUG</code> anymore</li>
+<li>when multiple <a href="https://tip.golang.org/pkg/crypto/tls/#Config.Certificates">certificate chains</a> are configured) the first compatible with the peer is selected automatically (e.g. for providing ECDSA and RSA certificates)</li>
+</ul>
+</section>
+<section id="ioutil.tempdir" class="slide level3">
+<h3><code>ioutil.TempDir</code></h3>
+<ul>
+<li><code>ioutil.TempDir</code> allows to specify a naming pattern (like <code>TempFile</code>)</li>
+<li>useful when cleaning up temporary stuff of an application (e.g. <code>rm -rf /tmp/my-app-*</code>)</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">docker</span> run -v <span class="va">$PWD</span>:/app -w /app --rm -it golang:1.14-rc go run predictable-tempdir.go</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">/tmp/584949244-my-app</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">/tmp/my-app-532238635</span></span></code></pre></div>
+</section>
+
+<section id="go-1.15" class="title-slide slide level1" data-background-image="https://images.unsplash.com/photo-1519567141891-788b756572ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1863&amp;q=80" data-background-opacity="0.31415">
+<h1 data-background-image="https://images.unsplash.com/photo-1519567141891-788b756572ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1863&amp;q=80" data-background-opacity="0.31415">Go 1.15</h1>
+
+</section>
+<section class="slide level3">
+
+<ul>
+<li><a href="https://blog.golang.org/go1.15-proposals">proposals</a></li>
+<li>scheduled for August 2020</li>
+<li>no major changes</li>
+</ul>
+</section>
+<section id="int-to-string" class="slide level3">
+<h3>Int to String</h3>
+<ul>
+<li><code>cmd/vet</code> warn about <a href="https://github.com/golang/go/issues/32479"><code>int</code> to <code>string</code> conversion</a></li>
+<li>just replace those <code>int</code>s with <code>rune</code>s</li>
+<li>example: <code>string(10)</code> is <code>"\n"</code> not <code>"10"</code></li>
+<li><code>unicode/utf8</code> provides <code>runeToString</code> (<a href="https://play.golang.org/p/ZnUF0Oc_dAG">play</a>)</li>
+</ul>
+</section>
+<section id="impossible-interface-interface-assertion" class="slide level3">
+<h3>Impossible <code>interface</code>-<code>interface</code> assertion</h3>
+<blockquote>
+<p>Currently, Go permits any type assertion x.(T) (and corresponding type switch case) where the type of x and T are interfaces.</p>
+</blockquote>
+</section>
+<section class="slide level3">
+
+<ul>
+<li>example: Two methods with the same name buth different signature (<a href="https://play.golang.org/p/ah551xs4So0">play</a>)</li>
+<li>impossible conversion is <a href="https://golang.org/issue/4483">known at compile-time</a></li>
+<li><code>cmd/vet</code> will warn about this (will be a compile error later)</li>
+</ul>
+</section>
+<section id="constant-evaluate-index-and-slice-expressions" class="slide level3">
+<h3>Constant-evaluate index and slice expressions</h3>
+<ul>
+<li>if the indices and values are constant then this <a href="https://github.com/golang/go/issues/28591">can be done at compile time</a></li>
+<li>turns out it is more complicated and would be <a href="https://github.com/golang/go/issues/28591#issuecomment-579993684">backwards incompatible</a></li>
+</ul>
+</section>
+
+<section id="future" class="title-slide slide level1" data-background-image="https://images.unsplash.com/photo-1543083115-638c32cd3d58?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2689&amp;q=80" data-background-opacity="0.31415">
+<h1 data-background-image="https://images.unsplash.com/photo-1543083115-638c32cd3d58?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2689&amp;q=80" data-background-opacity="0.31415">Future</h1>
+
+</section>
+<section class="slide level3">
+
+<blockquote>
+<p>The primary goals for Go remain package and version management, better error handling support, and generics.</p>
+</blockquote>
+<ul>
+<li><a href="https://golang.org/issue/32437">try proposal</a> was abandoned because of controversy</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1"></a>f, err := os.Open(filename)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">if</span> err != <span class="ot">nil</span> {</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="kw">return</span> …, err  <span class="co">// zero values for other results, if any</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">// with try</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>f := try(os.Open(filename))</span></code></pre></div>
+<blockquote>
+<p>we are also making progress on the generics front (more on that later this year).</p>
+</blockquote>
+</section>
+    </div>
+  </div>
+
+  <script src="https://revealjs.com/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://revealjs.com/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://revealjs.com/plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://revealjs.com/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
