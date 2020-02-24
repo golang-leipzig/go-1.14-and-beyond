@@ -31,7 +31,7 @@ works
 
 ### GOINSECURE
 
-- instuct `go` command to skip certificate validation or accept HTTP
+- instruct `go` command to skip certificate validation or accept HTTP
 - useful when developing a module proxy
 - `GOINSECURE=localhost go get foo/bar` 
 
@@ -39,7 +39,10 @@ works
 
 ### Vendoring
 
-- if `go.mod` specifies `Go 1.14` and a `/vendor` folder present then commands will default to using vendoring
+- commands will default to using vendoring if
+	- `go.mod` specifies `Go 1.14`
+	- and a `/vendor` folder is present
+- previously `-mod=vendor` must have been passed
 - usage of modules can be enforced with `-mod=mod`
 
 ---
@@ -155,7 +158,7 @@ PASS
 - if the indices and values are constant then this [can be done at compile time][issue28591]
 - turns out it is more complicated and would be [backwards incompatible][issue28591comment]
 
-# Future  {data-background-image=https://images.unsplash.com/photo-1543083115-638c32cd3d58?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80 data-background-opacity=0.31415}
+# Future {data-background-image=https://images.unsplash.com/photo-1543083115-638c32cd3d58?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80 data-background-opacity=0.31415}
 
 ---
 
@@ -172,7 +175,13 @@ if err != nil {
 f := try(os.Open(filename))
 ```
 
+---
+
+### Generics
+
 > we are also making progress on the generics front (more on that later this year).
+
+# Questions? {data-background-image=https://images.unsplash.com/photo-1557318041-1ce374d55ebf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80 data-background-opacity=0.31415
 
 [go114]: https://tip.golang.org/doc/go1.14
 [go115]: https://blog.golang.org/go1.15-proposals

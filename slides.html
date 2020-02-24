@@ -101,7 +101,7 @@
   <h1 class="title">Go 1.14 and Beyond</h1>
   <p class="subtitle">What we know already</p>
   <p class="author">Andreas Linz—klingt.net</p>
-  <p class="date">2019-11-14T19+01:00</p>
+  <p class="date">2020-02-21T19+16:11</p>
 </section>
 
 <section id="go-1.14" class="title-slide slide level1" data-background-image="https://images.unsplash.com/photo-1467219598992-52591d77fdec?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" data-background-opacity="0.31415">
@@ -130,7 +130,7 @@
 <section id="goinsecure" class="slide level3">
 <h3>GOINSECURE</h3>
 <ul>
-<li>instuct <code>go</code> command to skip certificate validation or accept HTTP</li>
+<li>instruct <code>go</code> command to skip certificate validation or accept HTTP</li>
 <li>useful when developing a module proxy</li>
 <li><code>GOINSECURE=localhost go get foo/bar</code></li>
 </ul>
@@ -138,7 +138,12 @@
 <section id="vendoring" class="slide level3">
 <h3>Vendoring</h3>
 <ul>
-<li>if <code>go.mod</code> specifies <code>Go 1.14</code> and a <code>/vendor</code> folder present then commands will default to using vendoring</li>
+<li>commands will default to using vendoring if
+<ul>
+<li><code>go.mod</code> specifies <code>Go 1.14</code></li>
+<li>and a <code>/vendor</code> folder is present</li>
+</ul></li>
+<li>previously <code>-mod=vendor</code> must have been passed</li>
 <li>usage of modules can be enforced with <code>-mod=mod</code></li>
 </ul>
 </section>
@@ -199,6 +204,31 @@
 <span id="cb2-2"><a href="#cb2-2"></a><span class="ex">/tmp/584949244-my-app</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="ex">/tmp/my-app-532238635</span></span></code></pre></div>
 </section>
+<section id="mime" class="slide level3">
+<h3><code>mime</code></h3>
+<ul>
+<li>default type of <code>.js</code> and <code>.mjs</code> files is now <code>text/javascript</code></li>
+<li><code>application/javascript</code> deprecated (<a href="https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/">IETF draft</a>)</li>
+</ul>
+</section>
+<section id="nethttp" class="slide level3">
+<h3><code>net/http</code></h3>
+<ul>
+<li><code>Header.Values</code> returns all values associated to a header key (<code>Header.Value</code> only returns the first one)</li>
+<li><code>httptest/Server</code> adds <code>EnableHTTP2</code></li>
+</ul>
+</section>
+<section id="testing" class="slide level3">
+<h3><code>testing</code></h3>
+<ul>
+<li><code>t.Cleanup</code> allows to define a custom cleanup function that is run after each test</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ <span class="ex">docker</span> run -v <span class="va">$PWD</span>:/app -w /app --rm -it golang:1.14-rc go test -v ./cleanup-test-artifacts_test.go</span>
+<span id="cb3-2"><a href="#cb3-2"></a>=== <span class="ex">RUN</span>   TestCleanup</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="ex">TestCleanup</span>: cleanup-test-artifacts_test.go:15: removing  /tmp/golang-leipzig-631932423</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">---</span> PASS: TestCleanup (0.00s)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">PASS</span></span></code></pre></div>
+</section>
 
 <section id="go-1.15" class="title-slide slide level1" data-background-image="https://images.unsplash.com/photo-1519567141891-788b756572ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1863&amp;q=80" data-background-opacity="0.31415">
 <h1 data-background-image="https://images.unsplash.com/photo-1519567141891-788b756572ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1863&amp;q=80" data-background-opacity="0.31415">Go 1.15</h1>
@@ -255,15 +285,23 @@
 <ul>
 <li><a href="https://golang.org/issue/32437">try proposal</a> was abandoned because of controversy</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1"></a>f, err := os.Open(filename)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">if</span> err != <span class="ot">nil</span> {</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="kw">return</span> …, err  <span class="co">// zero values for other results, if any</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>}</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">// with try</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>f := try(os.Open(filename))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb4-1"><a href="#cb4-1"></a>f, err := os.Open(filename)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">if</span> err != <span class="ot">nil</span> {</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="kw">return</span> …, err  <span class="co">// zero values for other results, if any</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">// with try</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>f := try(os.Open(filename))</span></code></pre></div>
+</section>
+<section id="generics" class="slide level3">
+<h3>Generics</h3>
 <blockquote>
 <p>we are also making progress on the generics front (more on that later this year).</p>
 </blockquote>
+</section>
+
+<section id="questions-data-background-imagehttpsimages.unsplash.comphoto-1557318041-1ce374d55ebfixlibrb-1.2.1ixideyjhchbfawqiojeymdd9autoformatfitcropw1000q80-data-background-opacity0.31415" class="title-slide slide level1">
+<h1>Questions? {data-background-image=https://images.unsplash.com/photo-1557318041-1ce374d55ebf?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80 data-background-opacity=0.31415</h1>
+
 </section>
     </div>
   </div>
